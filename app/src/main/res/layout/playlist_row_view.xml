@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/playView"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/play_icon" />
+
+    <ImageView
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:id="@+id/pauseView"
+        android:src="@drawable/pause_icon"/>
+
+    <TextView
+        android:id="@+id/titlePlaylist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/playView"
+        android:layout_margin="5dp"
+        android:text="title"
+        android:textSize="20sp" />
+
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_below="@id/titlePlaylist">
+
+    <ImageView
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:id="@+id/heartIcon"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/heart_icon" />
+    <TextView
+        android:id="@+id/heartsCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/heartIcon"
+        android:text="0"
+        android:textSize="15sp" />
+
+    <ImageView
+        android:id="@+id/commentIcon"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_toRightOf="@id/heartsCount"
+        android:layout_marginLeft="10dp"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/comment_icon" />
+
+    <TextView
+        android:id="@+id/commentsCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/commentIcon"
+        android:text="0"
+        android:textSize="15sp" />
+</RelativeLayout>
+
+
+</RelativeLayout>
