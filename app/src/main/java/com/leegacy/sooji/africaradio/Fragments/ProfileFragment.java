@@ -1,6 +1,5 @@
 package com.leegacy.sooji.africaradio.Fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -11,15 +10,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import com.leegacy.sooji.africaradio.Activities.RecordActivity;
-import com.leegacy.sooji.africaradio.Activities.SignInActivity;
 import com.leegacy.sooji.africaradio.DataObjects.PlaylistItem;
 import com.leegacy.sooji.africaradio.DataObjects.User;
+import com.leegacy.sooji.africaradio.Listeners.OnPlaylistListener;
 import com.leegacy.sooji.africaradio.Models.ProfileRowModel;
 import com.leegacy.sooji.africaradio.Models.RowModel;
 import com.leegacy.sooji.africaradio.MyAdapter;
@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * Created by soo-ji on 16-04-11.
  */
-public class ProfileFragment extends Fragment implements View.OnClickListener{
+public class ProfileFragment extends Fragment implements OnPlaylistListener{
     private View root;
     private String firstName;
     private String lastName;
@@ -51,30 +51,45 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         root = inflater.inflate(R.layout.profile_fragment, null);
         ref = new Firebase("https://blazing-inferno-7470.firebaseio.com/android/saving-data/fireblog");
 //        nameTextView = (TextView) root.findViewById(R.id.userID);
-        recordButton = (FloatingActionButton) root.findViewById(R.id.recordButton);
-        recordButton.setOnClickListener(this);
+//        recordButton = (FloatingActionButton) root.findViewById(R.id.recordButton);
+//        recordButton.setOnClickListener(this);
         recyclerView = (RecyclerView) root.findViewById(R.id.profile_recycler_view);
         LinearLayoutManager lm = new LinearLayoutManager(getActivity());
         //lm.setReverseLayout(true);
         recyclerView.setLayoutManager(lm);
 
         myAdapter = new MyAdapter();
+        myAdapter.setOnPlaylistListener(this);
         rowModels = new ArrayList<RowModel>();
 
 
 //        myAdapter.setRowModels(rowModels);
         //myAdapter.setOnSessionActivityListener(this);
         recyclerView.setAdapter(myAdapter);
-        getUserInfo();
 
+        checkAuth();
 
         return root;
     }
 
 
-    protected void getUserInfo(){
+    private void checkAuth() {
+        Firebase authRef = new Firebase("https://blazing-inferno-7470.firebaseio.com");
+        AuthData authData = authRef.getAuth();
+        if (authData != null) {
+            // user authenticated
+            uid = authData.getUid();
+            getUserInfo();
+        } else {
+            // no user authenticated
+            Toast.makeText(getActivity(), "User Not Logged In", Toast.LENGTH_LONG);
+        }
+    }
+
+
+    protected void getUserInfo() {
         Firebase userRef = ref.child("users").child(uid);
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
@@ -86,8 +101,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                 profileRowModel.setFirstName(firstName);
                 profileRowModel.setLastName(lastName);
 
-
-                rowModels.add(profileRowModel);
+                if (rowModels.size() < 1) {
+                    rowModels.add(profileRowModel);
+                    myAdapter.setRowModels(rowModels);
+                } else {
+                    rowModels.remove(0);
+                    rowModels.add(0, profileRowModel);
+                    myAdapter.setRowModels(rowModels);
+                }
                 getPlayList();
 //                playListID = user.getPlayListID();
 
@@ -101,9 +122,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         });
     }
 
-    protected void getPlayList(){
+    protected void getPlayList() {
         Firebase playlistRef = ref.child("playlist").child(uid);
-        playlistRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        playlistRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot playSnapshot : dataSnapshot.getChildren()) {
@@ -123,7 +144,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         });
     }
 
-//    protected void populateInfo(){
+    //    protected void populateInfo(){
 //        nameTextView.setText(firstName+" "+lastName);
 //        System.out.print(firstName);
 //
@@ -144,14 +165,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         this.lastName = lastName;
     }
 
-    @Override
-    public void onClick(View v) {
-        Intent intent = new Intent(getContext(), RecordActivity.class);
-        intent.putExtra(SignInActivity.UID, uid);
-        getActivity().finish();
-        this.onDestroy();
-        startActivity(intent);
-    }
+
 
     public List<RowModel> getRowModels() {
         return rowModels;
@@ -161,11 +175,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         this.rowModels = rowModels;
     }
 
-    public String getUid() {
-        return uid;
-    }
+    @Override
+    public void playRequested(String playListKey) {
 
-    public void setUid(String uid) {
-        this.uid = uid;
     }
 }

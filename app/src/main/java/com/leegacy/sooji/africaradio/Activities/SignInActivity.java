@@ -3,6 +3,7 @@ package com.leegacy.sooji.africaradio.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,6 +27,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     public static final String FIRST_NAME = "firstName";
     public static final String LAST_NAME = "lastName";
     public static final String UID = "userID";
+    private static final String TAG = "SIGNIN ACTIVITY";
     private Button signInButton;
     private EditText emailEditText;
     private EditText passwordEditText;
@@ -47,10 +49,10 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         switch (v.getId()) {
             case R.id.email_sign_in_button:
                 //TODO: uncomment this later
-//                String email = emailEditText.getText().toString();
-//                String password = passwordEditText.getText().toString();
-                    String email = "si-hun@hotmail.com";
-                    String password = "Cotlgns12";
+                String email = emailEditText.getText().toString();
+                String password = passwordEditText.getText().toString();
+//                    String email = "s@gmail.com";
+//                    String password = "00000000";
                 if (!email.contains("@")) {
                     Toast toast = Toast.makeText(this, "Invalid E-mail", Toast.LENGTH_SHORT);
                     toast.show();
@@ -84,7 +86,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                                 User user = snapshot.getValue(User.class);
 //                                intent.putExtra(FIRST_NAME, user.getFirstName());
 //                                intent.putExtra(LAST_NAME, user.getLastName());
-                                intent.putExtra(UID, authData.getUid());
+//                                intent.putExtra(UID, authData.getUid());
                                 System.out.println(user.getFirstName() + " - " + user.getLastName());
                                 finish();
                                 startActivity(intent);
@@ -103,7 +105,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public void onAuthenticationError(FirebaseError firebaseError) {
                         // there was an error
-                        Toast toast = Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_SHORT);
+                        Toast toast = Toast.makeText(getBaseContext(), firebaseError.getMessage(), Toast.LENGTH_LONG);
+                        Log.e(TAG, firebaseError.getMessage());
                         toast.show();
                         return;
                     }

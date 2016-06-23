@@ -26,7 +26,7 @@ import java.io.IOException;
 /**
  * Created by soo-ji on 16-04-23.
  */
-public class PlaylistViewHolder extends RowViewHolder implements View.OnClickListener {
+public class PlaylistViewHolder_v1 extends RowViewHolder implements View.OnClickListener {
     private final ImageView playIcon;
     private final ImageView heartIcon;
     private final TextView heartsCount;
@@ -43,7 +43,7 @@ public class PlaylistViewHolder extends RowViewHolder implements View.OnClickLis
     private boolean first = true;
     private String audioFile;
 
-    public PlaylistViewHolder(final View itemView) {
+    public PlaylistViewHolder_v1(final View itemView) {
         super(itemView);
         ref = new Firebase("https://blazing-inferno-7470.firebaseio.com/android/saving-data/fireblog");
 
@@ -76,7 +76,26 @@ public class PlaylistViewHolder extends RowViewHolder implements View.OnClickLis
 
     }
 
+    protected void decodeStringtoFile(String audioFile) {
+        byte[] decoded = Base64.decode(audioFile, Base64.DEFAULT);
+        File file = new File(Environment.getExternalStorageDirectory() + "/audio.3gp");
+        if (file.exists()) {
+            file.delete();
+            file = null;
+        }
+        try {
+            FileOutputStream os = new FileOutputStream(new File(Environment.getExternalStorageDirectory() + "/audio.3gp"), true);
+            os.write(decoded);
+            os.close();
+            return;
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(itemView.getContext(), "file not decoded", Toast.LENGTH_SHORT);
 
+        }
+        Toast.makeText(itemView.getContext(), "file not decoded", Toast.LENGTH_SHORT);
+
+    }
 
     protected void setupAudio(){
         //myMediaPlayer = MediaPlayer.create(this, outputFile);

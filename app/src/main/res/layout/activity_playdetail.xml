@@ -35,11 +35,13 @@
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:id="@+id/playButtonPlayDetail"
             android:src="@drawable/play_icon" />
 
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:id="@+id/pauseButtonPlayDetail"
             android:src="@drawable/pause_icon" />
     </RelativeLayout>
     <SeekBar

@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.leegacy.sooji.africaradio.DataObjects.PlaylistItem;
 import com.leegacy.sooji.africaradio.R;
@@ -29,7 +30,6 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     private EditText descriptionBox;
     private String audioFile;
     private SeekBar seekBar;
-    private Toast toast;
     private Firebase ref;
     private String uid;
 
@@ -43,11 +43,28 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         descriptionBox = (EditText) findViewById(R.id.description);
         seekBar = (SeekBar) findViewById(R.id.postSeekBar);
         audioFile = getIntent().getStringExtra("audioFile");
-        uid = getIntent().getStringExtra(SignInActivity.UID);
+
         ref = new Firebase("https://blazing-inferno-7470.firebaseio.com/android/saving-data/fireblog");
 
 
 
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        Firebase authRef = new Firebase("https://blazing-inferno-7470.firebaseio.com");
+        authRef.addAuthStateListener(new Firebase.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(AuthData authData) {
+                if (authData != null) {
+                    // user is logged in
+                    uid = authData.getUid();
+                } else {
+                    // user is not logged in
+                    Toast.makeText(getBaseContext(), "User Not Logged In", Toast.LENGTH_LONG);
+                }
+            }
+        });
     }
 
     @Override
@@ -56,7 +73,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.postButton:
                 String title = addTitle.getText().toString();
                 if(title.length() == 0){
-                    toast.makeText(this, "Title cannot be empty", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Title cannot be empty", Toast.LENGTH_LONG).show();
                     return;
                 }
                 String description = descriptionBox.getText().toString();
@@ -85,7 +102,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                 }
 //
                 Intent intent = new Intent(this,TabsActivity.class);
-                intent.putExtra(SignInActivity.UID, uid);
+
                 finish();
                 startActivity(intent);
 
@@ -116,7 +133,4 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         this.audioFile = audioFile;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
 }

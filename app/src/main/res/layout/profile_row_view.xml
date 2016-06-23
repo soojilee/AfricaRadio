@@ -17,7 +17,7 @@
         android:adjustViewBounds="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:src="@drawable/profile"
+        android:src="@drawable/person"
         android:scaleType="fitXY" />
 
     <TextView
@@ -29,4 +29,23 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/profilePicture"
         android:text="@string/bio"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bio"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:id="@+id/followButtonContainer">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/followButton"
+            android:text="Follow" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/messageButton"
+            android:layout_toRightOf="@id/followButton"
+            android:text="Message"/>
+    </RelativeLayout>
 </RelativeLayout>

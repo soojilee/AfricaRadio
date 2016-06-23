@@ -19,9 +19,9 @@
         <activity android:name=".Activities.SignInActivity"></activity>
         <activity android:name=".Activities.TabsActivity"></activity>
         <activity android:name=".Activities.RegisterActivity"></activity>
-        <activity android:name=".Activities.RecordActivity"></activity>
         <activity android:name=".Activities.PostActivity"></activity>
         <activity android:name=".Activities.PlayDetailActivity"></activity>
+        <activity android:name=".Activities.OtherProfileActivity"></activity>
 
 
     </application>

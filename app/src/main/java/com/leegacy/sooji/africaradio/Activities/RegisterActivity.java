@@ -59,7 +59,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 ref.createUser(email, password, new Firebase.ValueResultHandler<Map<String, Object>>() {
                     @Override
                     public void onSuccess(Map<String, Object> result) {
-                        System.out.println("whatlkaj");
                         Firebase ref = new Firebase("https://blazing-inferno-7470.firebaseio.com/android/saving-data/fireblog");
                         Firebase userRef = ref.child("users").child(result.get("uid").toString());
 

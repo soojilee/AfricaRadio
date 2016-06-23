@@ -8,6 +8,8 @@ public class ProfileRowModel extends RowModel {
     private String lastName;
     private String bio;
     private String profilePicture;
+    private String otherUid;
+
 
     public String getFirstName() {
         return firstName;
@@ -39,5 +41,14 @@ public class ProfileRowModel extends RowModel {
 
     public void setProfilePicture(String profilePicture) {
         this.profilePicture = profilePicture;
+    }
+
+
+    public String getOtherUid() {
+        return otherUid;
+    }
+
+    public void setOtherUid(String otherUid) {
+        this.otherUid = otherUid;
     }
 }
