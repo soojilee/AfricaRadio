@@ -1,27 +1,15 @@
 package com.leegacy.sooji.africaradio.ViewHolder;
 
-import android.content.Intent;
 import android.media.MediaPlayer;
-import android.os.Environment;
-import android.util.Base64;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
-import com.leegacy.sooji.africaradio.Activities.PlayDetailActivity;
 import com.leegacy.sooji.africaradio.Listeners.OnPlaylistListener;
 import com.leegacy.sooji.africaradio.Models.PlaylistRowModel;
 import com.leegacy.sooji.africaradio.Models.RowModel;
 import com.leegacy.sooji.africaradio.R;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 /**
  * Created by soo-ji on 16-04-23.
@@ -77,74 +65,33 @@ public class PlaylistViewHolder extends RowViewHolder implements View.OnClickLis
     }
 
 
-
-    protected void setupAudio(){
-        //myMediaPlayer = MediaPlayer.create(this, outputFile);
-
-        myMediaPlayer = new MediaPlayer();
-        ref.child("audioFile").child(audioFile).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                System.out.println("audioFile fetched" + dataSnapshot.getValue());
-                decodeStringtoFile(dataSnapshot.getValue(String.class));
-                try {
-                    myMediaPlayer.setDataSource(Environment.getExternalStorageDirectory() + "/audio.3gp");
-                    myMediaPlayer.prepare();
-                    myMediaPlayer.start();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Toast.makeText(itemView.getContext(), "fetching audio data failed1", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                Toast.makeText(itemView.getContext(), "fetching audio data failed", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        myMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                pauseIcon.setEnabled(false);
-                pauseIcon.setVisibility(View.INVISIBLE);
-                playIcon.setEnabled(true);
-                playIcon.setVisibility(View.VISIBLE);
-                first = true;
-            }
-        });
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.playView:
-                if (first) {
-
-                    setupAudio();
-
-                }else {
-
-                    myMediaPlayer.start();
+                if(first){
+                    onPlaylistListener.initAudioRequested(audioFile);
                 }
-                playIcon.setEnabled(false);
-                playIcon.setVisibility(View.INVISIBLE);
-                pauseIcon.setEnabled(true);
-                pauseIcon.setVisibility(View.VISIBLE);
-
+                onPlaylistListener.playRequested();
+                playIcon.setEnabled(true);
+                playIcon.setVisibility(View.VISIBLE);
+                pauseIcon.setEnabled(false);
+                pauseIcon.setVisibility(View.INVISIBLE);
                 break;
             case R.id.pauseView:
-                myMediaPlayer.pause();
                 first = false;
+                onPlaylistListener.pauseRequested();
                 playIcon.setEnabled(true);
                 playIcon.setVisibility(View.VISIBLE);
                 pauseIcon.setEnabled(false);
                 pauseIcon.setVisibility(View.INVISIBLE);
                 break;
             case View.NO_ID:
-                Intent intent = new Intent(itemView.getContext(), PlayDetailActivity.class);
-                intent.putExtra("playlistKey", model.getAudioFile());
-                itemView.getContext().startActivity(intent);
+                onPlaylistListener.addPlayDetailFragment();
+
+//                Intent intent = new Intent(itemView.getContext(), PlayDetailActivity.class);
+//                intent.putExtra("playlistKey", model.getAudioFile());
+//                itemView.getContext().startActivity(intent);
         }
     }
 
