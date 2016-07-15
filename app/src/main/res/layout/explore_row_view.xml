@@ -2,53 +2,65 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
     android:orientation="vertical">
 
+    <RelativeLayout
+        android:id="@+id/containAll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp">
+
+
+        <RelativeLayout
+            android:id="@+id/playButtonContainerExplore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:id="@+id/explore_play"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/play_icon" />
+
+            <ImageView
+                android:id="@+id/explore_pause"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/pause_icon" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/topContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/playButtonContainerExplore">
+
+            <TextView
+                android:id="@+id/explore_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="description"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/explore_userID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/explore_description"
+                android:layout_marginLeft="8dp"
+                android:text="USERID"
+                android:textSize="13sp" />
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+
     <ImageView
-        android:id="@+id/explore_profile_picture"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/person" />
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/topContainer"
-        android:layout_toRightOf="@+id/explore_profile_picture">
-
-        <TextView
-            android:id="@+id/explore_userID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="USERID" />
-
-        <TextView
-            android:id="@+id/explore_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/explore_userID"
-            android:layout_marginTop="5dp"
-            android:text="description" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/topContainer"
-        android:layout_centerHorizontal="true">
-
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:id="@+id/explore_play"
-            android:src="@drawable/play_icon" />
-
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:id="@+id/explore_pause"
-            android:src="@drawable/pause_icon" />
-    </RelativeLayout>
-
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
+        android:background="@color/grey" />
 </RelativeLayout>

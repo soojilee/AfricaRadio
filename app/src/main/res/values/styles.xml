@@ -8,6 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@color/deepRed</item>
+        <item name="android:colorBackground">@color/background_material_light</item>
+        <item name="android:windowBackground">@color/colorBackground</item>
     </style>
 
 </resources>

@@ -3,6 +3,7 @@ package com.leegacy.sooji.africaradio;
 import android.app.Application;
 
 import com.firebase.client.Firebase;
+import com.google.firebase.storage.FirebaseStorage;
 
 /**
  * Created by soo-ji on 16-04-11.

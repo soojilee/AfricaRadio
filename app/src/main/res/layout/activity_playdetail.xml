@@ -1,20 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="#ffffff"
     android:layout_height="match_parent">
-    <TextView
-        android:layout_width="wrap_content"
+
+    <RelativeLayout
+        android:id="@+id/profileBar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/backButton"
-        android:text="back"
-        android:textSize="20sp"
-        android:layout_margin="10dp"/>
+        android:background="@color/deepRed">
+
+        <ImageView
+            android:id="@+id/profilePicturePlayDetail"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="5dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/person"
+             />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:textColor="@color/white"
+            android:layout_toRightOf="@id/profilePicturePlayDetail"
+            android:text="" />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/titlePlayDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/profileBar"
         android:layout_centerHorizontal="true"
         android:layout_margin="25dp"
         android:text="title"
@@ -29,37 +50,90 @@
         android:text="description" />
 
 
-<RelativeLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_below="@id/descriptionPlayDetail"
-    android:layout_margin="25dp">
     <RelativeLayout
-        android:id="@+id/playButtonContainerPlayDetail"
-
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/playButtonPlayDetail"
-            android:src="@drawable/play_icon" />
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/pauseButtonPlayDetail"
-            android:src="@drawable/pause_icon" />
-    </RelativeLayout>
-    <SeekBar
-        android:id="@+id/seekbarPlayDetail"
-        android:layout_width="match_parent"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/playButtonContainerPlayDetail"
         android:layout_height="wrap_content"
-         />
-</RelativeLayout>
+        android:id="@+id/seekbarPlayDetailContainer"
+        android:layout_below="@id/descriptionPlayDetail"
+        android:layout_margin="25dp">
+
+        <RelativeLayout
+            android:id="@+id/playButtonContainerPlayDetail"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/playButtonPlayDetail"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/play_icon" />
+
+            <ImageView
+                android:id="@+id/pauseButtonPlayDetail"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/pause_icon" />
+        </RelativeLayout>
+
+        <SeekBar
+            android:id="@+id/seekbarPlayDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/playButtonContainerPlayDetail" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/heartcommentBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/seekbarPlayDetailContainer"
+        >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/lightGrey" />
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/heartIconPlayDetail"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/heart_icon" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:id="@+id/heartsCountPlayDetail"
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/heartIconPlayDetail"/>
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/commentIconPlayDetail"
+            android:layout_toRightOf="@id/heartsCountPlayDetail"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/comment_icon" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/commentIconPlayDetail"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_below="@id/heartIconPlayDetail"
+            android:layout_height="2px"
+            android:background="@color/lightGrey" />
+
+    </RelativeLayout>
+
 
 
 </RelativeLayout>

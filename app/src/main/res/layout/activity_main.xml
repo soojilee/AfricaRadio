@@ -3,27 +3,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/lightGrey"
     tools:context=".Activities.MainActivity">
-
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/signIn"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Log In"
+        android:textColor="@color/deepRed"
+        android:padding="20dp"
+        android:layout_alignParentBottom="true"/>
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/register"
-        android:layout_centerInParent="true"
-        android:padding="10dp"
-        android:text="Register"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:id="@+id/signIn"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@id/register"
-        android:layout_height="wrap_content"
-        android:text="Sign in"
-        android:padding="10dp"/>
+        android:padding="20dp"
+        android:textColor="@color/lightGrey"
+        android:background="@color/deepRed"
+        android:layout_above="@id/signIn"
+        android:text="Sign Up"
+        android:gravity="center"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/register">
+
+        <ImageView
+            android:layout_width="140dp"
+            android:layout_height="300dp"
+            android:id="@+id/africaText"
+            android:layout_marginLeft="65dp"
+            android:paddingBottom="27dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/chirp"/>
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/radio_icon"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/africaText"
+            android:src="@drawable/africa_radio_icon"
+
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+
+
+
 
 
 

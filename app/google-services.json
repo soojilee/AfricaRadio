@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "290764365851",
+    "firebase_url": "https://blazing-inferno-7470.firebaseio.com",
+    "project_id": "blazing-inferno-7470",
+    "storage_bucket": "blazing-inferno-7470.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:290764365851:android:e6c8e3735d6a5fc5",
+        "android_client_info": {
+          "package_name": "com.leegacy.sooji.africaradio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "290764365851-npgisrn84velrcd3u08e0qmdkcg3c7o9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwBr9JngBfp8cqVArbVyVGP-anNgpCw8g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

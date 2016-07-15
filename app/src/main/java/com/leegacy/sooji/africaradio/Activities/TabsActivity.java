@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.leegacy.sooji.africaradio.Fragments.ExploreFragment;
+import com.leegacy.sooji.africaradio.Fragments.HomeFragment;
 import com.leegacy.sooji.africaradio.Fragments.ProfileFragment;
 import com.leegacy.sooji.africaradio.Fragments.RecordFragment;
 import com.leegacy.sooji.africaradio.R;
@@ -44,9 +45,6 @@ public class TabsActivity extends AppCompatActivity{
         ref = new Firebase("https://blazing-inferno-7470.firebaseio.com/android/saving-data/fireblog");
 //        uid = getIntent().getStringExtra(SignInActivity.UID);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -59,17 +57,17 @@ public class TabsActivity extends AppCompatActivity{
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-
+        //logging out disable as of now
     }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         ProfileFragment pf = new ProfileFragment();
-
+        HomeFragment hf = new HomeFragment();
         RecordFragment rf = new RecordFragment();
         ExploreFragment ef = new ExploreFragment();
 
+        adapter.addFragment(hf, "HOME");
         adapter.addFragment(ef, "EXPLORE");
         adapter.addFragment(rf, "RECORD");
         adapter.addFragment(pf, "PROFILE");

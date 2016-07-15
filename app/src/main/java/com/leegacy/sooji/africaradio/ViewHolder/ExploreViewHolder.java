@@ -2,8 +2,7 @@ package com.leegacy.sooji.africaradio.ViewHolder;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.os.Environment;
-import android.util.Base64;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,6 +12,11 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.leegacy.sooji.africaradio.Activities.OtherProfileActivity;
 import com.leegacy.sooji.africaradio.DataObjects.User;
 import com.leegacy.sooji.africaradio.Models.ExploreRowModel;
@@ -20,7 +24,6 @@ import com.leegacy.sooji.africaradio.Models.RowModel;
 import com.leegacy.sooji.africaradio.R;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
@@ -32,7 +35,7 @@ public class ExploreViewHolder extends RowViewHolder implements View.OnClickList
     private static final String TAG = "EXPLORE_VIEW_HOLDER";
     private final TextView exploreUserID;
     private final TextView exploreDescription;
-    private final ImageView exploreProfile;
+//    private final ImageView exploreProfile;
     private final ImageView playButton;
     private final ImageView pauseButton;
     private final Firebase ref;
@@ -40,6 +43,7 @@ public class ExploreViewHolder extends RowViewHolder implements View.OnClickList
     private boolean first = true;
     private String audioFile;
     private String otherUid;
+    private File localFile;
 
 
     public ExploreViewHolder(View itemView) {
@@ -47,36 +51,19 @@ public class ExploreViewHolder extends RowViewHolder implements View.OnClickList
         ref = new Firebase("https://blazing-inferno-7470.firebaseio.com/android/saving-data/fireblog");
         exploreUserID = (TextView) itemView.findViewById(R.id.explore_userID);
         exploreDescription = (TextView) itemView.findViewById(R.id.explore_description);
-        exploreProfile = (ImageView) itemView.findViewById(R.id.explore_profile_picture);
+//        exploreProfile = (ImageView) itemView.findViewById(R.id.explore_profile_picture);
         playButton = (ImageView) itemView.findViewById(R.id.explore_play);
         pauseButton = (ImageView) itemView.findViewById(R.id.explore_pause);
         exploreUserID.setOnClickListener(this);
-        exploreProfile.setOnClickListener(this);
+//        exploreProfile.setOnClickListener(this);
+        itemView.setOnClickListener(this);
         pauseButton.setOnClickListener(this);
         pauseButton.setClickable(false);
         playButton.setOnClickListener(this);
         pauseButton.setVisibility(View.INVISIBLE);
     }
 
-    protected void decodeStringtoFile(String audioFile) {
-        byte[] decoded = Base64.decode(audioFile, Base64.DEFAULT);
-        File file = new File(Environment.getExternalStorageDirectory() + "/audio.3gp");
-        if (file.exists()) {
-            file.delete();
-            file = null;
-        }
-        try {
-            FileOutputStream os = new FileOutputStream(new File(Environment.getExternalStorageDirectory() + "/audio.3gp"), true);
-            os.write(decoded);
-            os.close();
-            return;
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(itemView.getContext(), "file not decoded", Toast.LENGTH_SHORT);
-        }
-        Toast.makeText(itemView.getContext(), "file not decoded", Toast.LENGTH_SHORT);
 
-    }
 
     @Override
     public void update(RowModel rowModel) {
@@ -105,27 +92,28 @@ public class ExploreViewHolder extends RowViewHolder implements View.OnClickList
 
     protected void setupAudio(){
         //myMediaPlayer = MediaPlayer.create(this, outputFile);
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference audioStorageRef = storage.getReferenceFromUrl("gs://blazing-inferno-7470.appspot.com/audioFile");
 
         myMediaPlayer = new MediaPlayer();
 
-        ref.child("audioFile").child(audioFile).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-//                Log.e(TAG,"audioFile fetched" + dataSnapshot.getValue());
-                decodeStringtoFile(dataSnapshot.getValue(String.class));
-                try {
-                    myMediaPlayer.setDataSource(Environment.getExternalStorageDirectory() + "/audio.3gp");
-                    myMediaPlayer.prepare();
-                    myMediaPlayer.start();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Toast.makeText(itemView.getContext(), "fetching audio data failed1", Toast.LENGTH_SHORT).show();
-                }
-            }
 
+        localFile = null;
+        try {
+            localFile = File.createTempFile("audio", "3gp");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        audioStorageRef.child(audioFile).getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                Toast.makeText(itemView.getContext(), "fetching audio data failed", Toast.LENGTH_SHORT).show();
+            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                startPlayer();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                //TODO: handle errors
             }
         });
 
@@ -141,10 +129,23 @@ public class ExploreViewHolder extends RowViewHolder implements View.OnClickList
         });
     }
 
+    private void startPlayer() {
+        try {
+            myMediaPlayer.setDataSource(localFile.getAbsolutePath());
+            myMediaPlayer.prepare();
+//            seekBar.setMax(myMediaPlayer.getDuration());
+//            seekUpdation();
+            myMediaPlayer.start();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(itemView.getContext(), "fetching audio data failed1", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.explore_play:
+            if(v.getId()== R.id.explore_play) {
                 if (first) {
 
                     setupAudio();
@@ -157,23 +158,26 @@ public class ExploreViewHolder extends RowViewHolder implements View.OnClickList
                 playButton.setVisibility(View.INVISIBLE);
                 pauseButton.setClickable(true);
                 pauseButton.setVisibility(View.VISIBLE);
-
-                break;
-            case R.id.explore_pause:
+            }
+            else if(v.getId() == R.id.explore_pause) {
                 myMediaPlayer.pause();
                 first = false;
                 playButton.setClickable(true);
                 playButton.setVisibility(View.VISIBLE);
                 pauseButton.setClickable(false);
                 pauseButton.setVisibility(View.INVISIBLE);
-                break;
-            case R.id.explore_userID:
+            }else if(v == itemView) {
                 gotoProfile();
-                break;
-            case R.id.explore_profile_picture:
-                gotoProfile();
-                break;
-        }
+            }
+//            case R.id.explore_userID:
+//                gotoProfile();
+//                break;
+
+//            case R.id.explore_profile_picture:
+//                gotoProfile();
+//                break;
+
+
     }
 
     private void gotoProfile() {

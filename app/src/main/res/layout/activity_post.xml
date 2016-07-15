@@ -1,40 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/recordBackground">
 
     <EditText
-        android:layout_marginTop="15dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/addTitle"
-        android:hint="Add Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
+        android:maxLines="1"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:hint="Add Title"
+        android:padding="7dp" />
 
     <EditText
-        android:layout_marginTop="15dp"
+        android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:hint="Describe Content"
-        android:gravity="top"
         android:layout_below="@id/addTitle"
         android:layout_centerHorizontal="true"
-        android:id="@+id/description"
-        />
-    <SeekBar
-        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/white"
+        android:gravity="top"
+        android:hint="Write a caption..."
+        android:padding="7dp" />
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/description"
-        android:id="@+id/postSeekBar"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/postButton"
-        android:text="POST"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"/>
+        android:id="@+id/postButton"
+        android:background="@drawable/round_corner"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:padding="12dp"
+        >
+
+        <TextView
+            android:id="@+id/postButtonText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="SHARE"
+            android:textColor="@color/darkGrey" />
+
+
+    </FrameLayout>
 
 
 </RelativeLayout>

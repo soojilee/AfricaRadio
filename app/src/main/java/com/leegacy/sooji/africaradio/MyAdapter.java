@@ -6,14 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.leegacy.sooji.africaradio.Listeners.OnHomeRowListener;
 import com.leegacy.sooji.africaradio.Listeners.OnPlaylistListener;
 import com.leegacy.sooji.africaradio.Models.CommentRowModel;
 import com.leegacy.sooji.africaradio.Models.ExploreRowModel;
+import com.leegacy.sooji.africaradio.Models.HomeRowModel;
 import com.leegacy.sooji.africaradio.Models.PlaylistRowModel;
 import com.leegacy.sooji.africaradio.Models.ProfileRowModel;
 import com.leegacy.sooji.africaradio.Models.RowModel;
 import com.leegacy.sooji.africaradio.ViewHolder.CommentViewHolder;
 import com.leegacy.sooji.africaradio.ViewHolder.ExploreViewHolder;
+import com.leegacy.sooji.africaradio.ViewHolder.HomeViewHolder;
 import com.leegacy.sooji.africaradio.ViewHolder.PlaylistViewHolder;
 import com.leegacy.sooji.africaradio.ViewHolder.ProfileViewHolder;
 import com.leegacy.sooji.africaradio.ViewHolder.RowViewHolder;
@@ -27,6 +30,7 @@ public class MyAdapter extends RecyclerView.Adapter{
     private static final String TAG = "MY ADAPTER";
     private List<RowModel> rowModels;
     private OnPlaylistListener onPlaylistListener;
+    private OnHomeRowListener onHomeRowListener;
 
     public void setRowModels(List<RowModel> rowModels) {
         this.rowModels = rowModels;
@@ -37,11 +41,16 @@ public class MyAdapter extends RecyclerView.Adapter{
         this.onPlaylistListener = onPlaylistListener;
     }
 
+    public void setOnHomeRowListener(OnHomeRowListener onHomeRowListener) {
+        this.onHomeRowListener = onHomeRowListener;
+    }
+
     enum ViewTypes{
         PROFILE_ROW_MODEL,
         COMMENT_ROW_MODEL,
         PLAYLIST_ROW_MODEL,
-        EXPLORE_ROW_MODEL
+        EXPLORE_ROW_MODEL,
+        HOME_ROW_MODEL
     }
 
     @Override
@@ -60,6 +69,11 @@ public class MyAdapter extends RecyclerView.Adapter{
         }else if(viewType == ViewTypes.EXPLORE_ROW_MODEL.ordinal()){
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.explore_row_view,parent,false);
             return new ExploreViewHolder(v);
+        }else if(viewType == ViewTypes.HOME_ROW_MODEL.ordinal()){
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_row_view,parent,false);
+            HomeViewHolder homeViewHolder = new HomeViewHolder(v);
+            homeViewHolder.setOnHomeRowListener(onHomeRowListener);
+            return homeViewHolder;
         }
         return null;
     }
@@ -86,8 +100,10 @@ public class MyAdapter extends RecyclerView.Adapter{
             return ViewTypes.COMMENT_ROW_MODEL.ordinal();
         }else if(rm instanceof PlaylistRowModel){
             return ViewTypes.PLAYLIST_ROW_MODEL.ordinal();
-        }else if (rm instanceof ExploreRowModel) {
+        }else if(rm instanceof ExploreRowModel) {
             return ViewTypes.EXPLORE_ROW_MODEL.ordinal();
+        }else if(rm instanceof HomeRowModel){
+            return ViewTypes.HOME_ROW_MODEL.ordinal();
         }
 
         Log.e(TAG, "Critical Error: Row item view type was not recognized");

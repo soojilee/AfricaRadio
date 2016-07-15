@@ -1,12 +1,15 @@
 package com.leegacy.sooji.africaradio.ViewHolder;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.client.Firebase;
+import com.leegacy.sooji.africaradio.Activities.PlayDetailActivity;
 import com.leegacy.sooji.africaradio.Listeners.OnPlaylistListener;
+import com.leegacy.sooji.africaradio.Listeners.OnProfileFragmentListener;
 import com.leegacy.sooji.africaradio.Models.PlaylistRowModel;
 import com.leegacy.sooji.africaradio.Models.RowModel;
 import com.leegacy.sooji.africaradio.R;
@@ -14,15 +17,15 @@ import com.leegacy.sooji.africaradio.R;
 /**
  * Created by soo-ji on 16-04-23.
  */
-public class PlaylistViewHolder extends RowViewHolder implements View.OnClickListener {
-    private final ImageView playIcon;
-    private final ImageView heartIcon;
-    private final TextView heartsCount;
-    private final ImageView commentIcon;
-    private final TextView commentsCount;
-    private final TextView titlePlaylist;
-    private final ImageView pauseIcon;
-    private final Firebase ref;
+public class PlaylistViewHolder extends RowViewHolder implements View.OnClickListener, OnProfileFragmentListener {
+    private ImageView playIcon;
+    private ImageView heartIcon;
+    private TextView heartsCount;
+    private ImageView commentIcon;
+    private TextView commentsCount;
+    private TextView titlePlaylist;
+    private ImageView pauseIcon;
+    private Firebase ref;
     private OnPlaylistListener onPlaylistListener;
 
 
@@ -35,6 +38,11 @@ public class PlaylistViewHolder extends RowViewHolder implements View.OnClickLis
         super(itemView);
         ref = new Firebase("https://blazing-inferno-7470.firebaseio.com/android/saving-data/fireblog");
 
+        init();
+
+    }
+
+    private void init(){
         playIcon = (ImageView) itemView.findViewById(R.id.playView);
         pauseIcon = (ImageView) itemView.findViewById(R.id.pauseView);
         pauseIcon.setEnabled(false);
@@ -45,13 +53,13 @@ public class PlaylistViewHolder extends RowViewHolder implements View.OnClickLis
         titlePlaylist = (TextView) itemView.findViewById(R.id.titlePlaylist);
 
 
+
         playIcon.setOnClickListener(this);
         pauseIcon.setOnClickListener(this);
         pauseIcon.setEnabled(false);
         pauseIcon.setVisibility(View.INVISIBLE);
         itemView.setId(View.NO_ID);
         itemView.setOnClickListener(this);
-
     }
 
     @Override
@@ -69,14 +77,17 @@ public class PlaylistViewHolder extends RowViewHolder implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.playView:
-                if(first){
-                    onPlaylistListener.initAudioRequested(audioFile);
-                }
-                onPlaylistListener.playRequested();
                 playIcon.setEnabled(true);
-                playIcon.setVisibility(View.VISIBLE);
+                playIcon.setVisibility(View.INVISIBLE);
                 pauseIcon.setEnabled(false);
-                pauseIcon.setVisibility(View.INVISIBLE);
+                pauseIcon.setVisibility(View.VISIBLE);
+                if(first){
+                    onPlaylistListener.setProfileFragmentListener(this);
+                    onPlaylistListener.initAudioRequested(audioFile);
+                }else {
+                    onPlaylistListener.playRequested();
+                }
+
                 break;
             case R.id.pauseView:
                 first = false;
@@ -87,15 +98,33 @@ public class PlaylistViewHolder extends RowViewHolder implements View.OnClickLis
                 pauseIcon.setVisibility(View.INVISIBLE);
                 break;
             case View.NO_ID:
-                onPlaylistListener.addPlayDetailFragment();
+//                onPlaylistListener.addPlayDetailFragment(model);
 
-//                Intent intent = new Intent(itemView.getContext(), PlayDetailActivity.class);
-//                intent.putExtra("playlistKey", model.getAudioFile());
-//                itemView.getContext().startActivity(intent);
+                Intent intent = new Intent(itemView.getContext(), PlayDetailActivity.class);
+                intent.putExtra("playlistKey", model.getAudioFile());
+                itemView.getContext().startActivity(intent);
         }
     }
 
     public void setOnPlaylistListener(OnPlaylistListener onPlaylistListener) {
         this.onPlaylistListener = onPlaylistListener;
     }
+
+    @Override
+    public void playFinished() {
+        pauseIcon.setEnabled(false);
+        pauseIcon.setVisibility(View.INVISIBLE);
+        playIcon.setEnabled(true);
+        playIcon.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void playing() {
+        pauseIcon.setEnabled(true);
+        pauseIcon.setVisibility(View.VISIBLE);
+        playIcon.setEnabled(false);
+        playIcon.setVisibility(View.INVISIBLE);
+    }
+
+
 }

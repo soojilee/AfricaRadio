@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.AuthData;
@@ -15,6 +15,8 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.leegacy.sooji.africaradio.DataObjects.User;
 import com.leegacy.sooji.africaradio.R;
 
@@ -28,20 +30,33 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     public static final String LAST_NAME = "lastName";
     public static final String UID = "userID";
     private static final String TAG = "SIGNIN ACTIVITY";
-    private Button signInButton;
+    private TextView signInButton;
     private EditText emailEditText;
     private EditText passwordEditText;
     private Firebase myFirebaseRef;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
-        signInButton = (Button) findViewById(R.id.email_sign_in_button);
+        signInButton = (TextView) findViewById(R.id.email_sign_in_button);
         signInButton.setOnClickListener(this);
         emailEditText = (EditText) findViewById(R.id.email_signin);
         passwordEditText = (EditText) findViewById(R.id.singin_password);
         myFirebaseRef = new Firebase("https://blazing-inferno-7470.firebaseio.com/");
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        // Create a storage reference from our app
+        StorageReference storageRef = storage.getReferenceFromUrl("gs://blazing-inferno-7470.appspot.com");
+
+        // Create a child reference
+// imagesRef now points to "images"
+        StorageReference imagesRef = storageRef.child("images");
+
+// Child references can also take paths
+// spaceRef now points to "users/me/profile.png
+// imagesRef still points to "images"
+        StorageReference spaceRef = storageRef.child("images/space.jpg");
     }
 
     @Override

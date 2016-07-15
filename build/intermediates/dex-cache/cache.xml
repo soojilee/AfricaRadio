@@ -1,2 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
+
+    <item
+        jar="/Users/soo-ji/AfricaRadio/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="dd7676ac12aa6653718b7ea33d93ce9d6915d526">
+        <dex dex="/Users/soo-ji/AfricaRadio/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-basement-9.2.0_1c9a7bbc11a9ac6aa7dcb49c74e766cda771e32d.jar" />
+    </item>
+    <item
+        jar="/Users/soo-ji/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.1.1/support-annotations-23.1.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="8d680ba5a623724d1fb0e81c36a790f023a6cede">
+        <dex dex="/Users/soo-ji/AfricaRadio/app/build/intermediates/pre-dexed/debug/support-annotations-23.1.1_cf4525a18c34edb86a3274252670e7e503f1606d.jar" />
+    </item>
+    <item
+        jar="/Users/soo-ji/AfricaRadio/app/build/intermediates/exploded-aar/com.google.firebase/firebase-auth-common/9.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="44120508d7240c3e34a05957981a5c3c9b9f61aa">
+        <dex dex="/Users/soo-ji/AfricaRadio/app/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-auth-common-9.2.0_c4d4e9f7966fb335d8b0c8b8d905c72f9a8cdaa9.jar" />
+    </item>
+    <item
+        jar="/Users/soo-ji/AfricaRadio/app/build/intermediates/exploded-aar/com.google.firebase/firebase-auth/9.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="20ca7888c59f63d439f218a8810c88039f8bc7db">
+        <dex dex="/Users/soo-ji/AfricaRadio/app/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-auth-9.2.0_4443eda05918c050e13b5c1a1006ce6556d12d4e.jar" />
+    </item>
+    <item
+        jar="/Users/soo-ji/AfricaRadio/app/build/intermediates/exploded-aar/com.google.firebase/firebase-storage/9.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="a378adc3106cb3560ab3dfed05f1fda26cff5b49">
+        <dex dex="/Users/soo-ji/AfricaRadio/app/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-storage-9.2.0_bacb1bab5ff451e3289bc001facdee562f935502.jar" />
+    </item>
+    <item
+        jar="/Users/soo-ji/AfricaRadio/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="5c5699834e9722f1c288fea2de82725d078ba127">
+        <dex dex="/Users/soo-ji/AfricaRadio/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.1.1_460d412055823a061ce07f068b7aab90c52b8a9b.jar" />
+    </item>
+    <item
+        jar="/Users/soo-ji/AfricaRadio/app/build/intermediates/exploded-aar/com.google.firebase/firebase-iid/9.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="dc4c18602ecffb3e69cda6cdc51ba4feac0f97d7">
+        <dex dex="/Users/soo-ji/AfricaRadio/app/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-iid-9.2.0_29de1ac26e17940b0d2a874681a77d5e2bbf5156.jar" />
+    </item>
+    <item
+        jar="/Users/soo-ji/AfricaRadio/app/build/intermediates/exploded-aar/com.google.firebase/firebase-storage-common/9.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="fa6c324604383981fb74c4cb036d4171ed0a9a02">
+        <dex dex="/Users/soo-ji/AfricaRadio/app/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-storage-common-9.2.0_d454064813f3c443b4bd61b8185df71fc0becfd8.jar" />
+    </item>
+    <item
+        jar="/Users/soo-ji/AfricaRadio/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tasks/9.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="593fbaec1c3e100480a2bd72457b64b7dde6ac2d">
+        <dex dex="/Users/soo-ji/AfricaRadio/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-tasks-9.2.0_6f9b73e4bd0aee72922ac95a42091fc3a574a9e8.jar" />
+    </item>
+    <item
+        jar="/Users/soo-ji/AfricaRadio/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics-impl/9.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="fb15fd9774b5c51dcb39d8e6fa1b6f06bcd1cd34">
+        <dex dex="/Users/soo-ji/AfricaRadio/app/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-analytics-impl-9.2.0_16a937b12060b76c53b844cd314e43497f2e1942.jar" />
+    </item>
+    <item
+        jar="/Users/soo-ji/AfricaRadio/app/build/intermediates/exploded-aar/com.google.firebase/firebase-common/9.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="363f626ad5686283250cdb6073ae1bba5cb07a87">
+        <dex dex="/Users/soo-ji/AfricaRadio/app/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-common-9.2.0_d1338d2aba0904b3ba23fce295e7322b2bd2a648.jar" />
+    </item>
+    <item
+        jar="/Users/soo-ji/AfricaRadio/app/libs/firebase-client-android-2.5.2.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="b54cf0400e2248d6c133c7b0a77dea1be09978cc">
+        <dex dex="/Users/soo-ji/AfricaRadio/app/build/intermediates/pre-dexed/debug/firebase-client-android-2.5.2_e69bcc0784c395cfa6d3479be2917fc428934716.jar" />
+    </item>
+    <item
+        jar="/Users/soo-ji/AfricaRadio/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/9.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="30489a97b06cc3945bdbcc1770089af9e3b3b64d">
+        <dex dex="/Users/soo-ji/AfricaRadio/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-base-9.2.0_c15e7c71a88f28035c5619f869fb8abd96e01534.jar" />
+    </item>
+    <item
+        jar="/Users/soo-ji/AfricaRadio/app/build/intermediates/exploded-aar/com.android.support/design/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="379471b2bd17d9737c050345c08e8c7d16589784">
+        <dex dex="/Users/soo-ji/AfricaRadio/app/build/intermediates/pre-dexed/debug/com.android.support-design-23.1.1_6271de594f267d50a1fbee14725118fc1b1e7e52.jar" />
+    </item>
+    <item
+        jar="/Users/soo-ji/AfricaRadio/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics/9.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="4838df6db988160b107e954e02a745370df543b6">
+        <dex dex="/Users/soo-ji/AfricaRadio/app/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-analytics-9.2.0_73dc7b193d24da693c86e5f8635505a3fb45aa13.jar" />
+    </item>
+    <item
+        jar="/Users/soo-ji/AfricaRadio/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/libs/internal_impl-23.1.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
+        <dex dex="/Users/soo-ji/AfricaRadio/app/build/intermediates/pre-dexed/debug/internal_impl-23.1.1_fe4564dcefb9219b1a9ebf2e40f95d1858d44a13.jar" />
+    </item>
+    <item
+        jar="/Users/soo-ji/AfricaRadio/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="09c5e804bc67fc0580360043dff067df574a60d4">
+        <dex dex="/Users/soo-ji/AfricaRadio/app/build/intermediates/pre-dexed/debug/com.android.support-recyclerview-v7-23.1.1_dfc2d327e4356b3046fa7ab2263626f8098e0dc0.jar" />
+    </item>
+    <item
+        jar="/Users/soo-ji/AfricaRadio/app/build/intermediates/exploded-aar/com.google.firebase/firebase-config/9.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="ce9432b50a02be101bc491a1b38d3904200bd988">
+        <dex dex="/Users/soo-ji/AfricaRadio/app/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-config-9.2.0_fc6602a003bca25ce3bc3ae984f4262142debb2e.jar" />
+    </item>
+    <item
+        jar="/Users/soo-ji/AfricaRadio/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="6cbc7773921fcfedbe55657578f0cbfe614778dc">
+        <dex dex="/Users/soo-ji/AfricaRadio/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-23.1.1_72bbaeafa2f93bfaf1da4f0aff43df0008a6e365.jar" />
+    </item>
+    <item
+        jar="/Users/soo-ji/AfricaRadio/app/build/intermediates/exploded-aar/com.google.firebase/firebase-auth-module/9.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="e791f7f2fbf9ca5b3b576916533f844dfb384024">
+        <dex dex="/Users/soo-ji/AfricaRadio/app/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-auth-module-9.2.0_c4e32e4ca7d8a0fa7a399cd0cdbaad3d44efb5c9.jar" />
+    </item>
+
+</items>

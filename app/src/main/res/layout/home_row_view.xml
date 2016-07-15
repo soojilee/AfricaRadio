@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/profileBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:id="@+id/home_row_profile_image"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="5dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/person" />
+
+        <TextView
+            android:id="@+id/home_row_userID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@id/home_row_profile_image"
+            android:text="user"
+            android:textColor="@color/darkGrey" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/home_row_play_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profileBar"
+        android:background="@color/recordBackground">
+
+        <ImageView
+            android:id="@+id/home_row_play"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="15dp"
+            android:src="@drawable/play_icon_border" />
+        <ImageView
+            android:id="@+id/home_row_pause"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="15dp"
+            android:src="@drawable/pause_icon_border"/>
+
+        <TextView
+            android:id="@+id/home_row_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@id/home_row_play"
+            android:text="Title"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/home_row_caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/home_row_title"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="3dp"
+            android:layout_toRightOf="@id/home_row_play"
+            android:maxLines="2"
+            android:text="caption for the recording goes here..." />
+    </RelativeLayout>
+
+
+    <ImageView
+        android:id="@+id/home_row_heart_empty"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_below="@id/home_row_play_container"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/heart_icon_empty" />
+
+
+    <View
+        android:id="@+id/lineUnderHeart"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@id/home_row_heart_empty"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="13dp"
+        android:background="@color/mediumGrey" />
+
+    <ImageView
+        android:id="@+id/home_row_heart_fill"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_below="@id/lineUnderHeart"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/heart_icon" />
+
+    <TextView
+        android:id="@+id/home_num_likes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lineUnderHeart"
+        android:layout_toRightOf="@id/home_row_heart_fill"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="8dp"
+        android:text="0" />
+
+    <TextView
+        android:id="@+id/home_row_likes_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lineUnderHeart"
+        android:layout_toRightOf="@id/home_num_likes"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="8dp"
+        android:text="like" />
+
+</RelativeLayout>

@@ -3,29 +3,31 @@ package com.leegacy.sooji.africaradio.Activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.leegacy.sooji.africaradio.DataObjects.PlaylistItem;
 import com.leegacy.sooji.africaradio.R;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * Created by soo-ji on 16-04-22.
  */
 public class PostActivity extends AppCompatActivity implements View.OnClickListener{
-    private Button postButton;
+    private FrameLayout postButton;
     private EditText addTitle;
     private EditText descriptionBox;
     private String audioFile;
@@ -37,11 +39,11 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
-        postButton = (Button) findViewById(R.id.postButton);
+        postButton = (FrameLayout) findViewById(R.id.postButton);
         postButton.setOnClickListener(this);
         addTitle = (EditText) findViewById(R.id.addTitle);
         descriptionBox = (EditText) findViewById(R.id.description);
-        seekBar = (SeekBar) findViewById(R.id.postSeekBar);
+//        seekBar = (SeekBar) findViewById(R.id.postSeekBar);
         audioFile = getIntent().getStringExtra("audioFile");
 
         ref = new Firebase("https://blazing-inferno-7470.firebaseio.com/android/saving-data/fireblog");
@@ -69,6 +71,9 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference audioStorageRef = storage.getReferenceFromUrl("gs://blazing-inferno-7470.appspot.com/audioFile");
+
         switch(v.getId()){
             case R.id.postButton:
                 String title = addTitle.getText().toString();
@@ -87,43 +92,32 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                 newplayref.setValue(recording);
 //                newplayref.child("audioFile").setValue(newplayref.getKey());
 
-                byte[] soundBytes;
+                Uri file = Uri.fromFile(new File(audioFile));
+                StorageReference audioFileRef = audioStorageRef.child(newplayref.getKey());
+                UploadTask uploadTask = audioFileRef.putFile(file);
 
-                try{
-                    InputStream inputStream = getContentResolver().openInputStream(Uri.fromFile(new File(audioFile)));
-                    soundBytes = new byte[inputStream.available()];
-                    soundBytes = toByteArray(inputStream);
-                    String audioFileString = Base64.encodeToString(soundBytes, Base64.DEFAULT);
-                    ref.child("audioFile").child(newplayref.getKey()).setValue(audioFileString);
-                    inputStream.close();
-                }catch(Exception e){
-                    e.printStackTrace();
-                    Toast.makeText(this, "ERROR, SOUND NOT CONVERTED TO STRING", Toast.LENGTH_SHORT).show();
-                }
-//
-                Intent intent = new Intent(this,TabsActivity.class);
+                // Register observers to listen for when the download is done or if it fails
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                        Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                        Intent intent = new Intent(getBaseContext(),TabsActivity.class);
 
-                finish();
-                startActivity(intent);
+                        finish();
+                        startActivity(intent);
+                    }
+                });
 
                 break;
         }
     }
 
-
-
-    public byte[] toByteArray(InputStream in) throws IOException{
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        int read = 0;
-        byte[] buffer = new byte[1024];
-        while(read != -1){
-            read = in.read(buffer);
-            if(read != -1)
-                out.write(buffer,0,read);
-        }
-        out.close();
-        return out.toByteArray();
-    }
 
     public String getAudioFile() {
         return audioFile;

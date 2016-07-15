@@ -7,39 +7,53 @@
     <ScrollView
         android:id="@+id/register_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/lightGrey">
 
         <LinearLayout
             android:id="@+id/email_register_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@color/white"
             android:orientation="vertical">
 
             <EditText
                 android:id="@+id/first_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:hint="@string/prompt_first_name"
                 android:inputType="textEmailAddress"
+
                 android:maxLines="1"
+                android:padding="15dp"
                 android:singleLine="true" />
 
             <EditText
                 android:id="@+id/last_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
+
                 android:hint="@string/prompt_last_name"
                 android:inputType="textEmailAddress"
+
                 android:maxLines="1"
+                android:padding="15dp"
                 android:singleLine="true" />
 
             <EditText
                 android:id="@+id/email_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
+
                 android:hint="@string/prompt_email"
+
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
+                android:padding="15dp"
                 android:singleLine="true" />
 
 
@@ -47,34 +61,41 @@
                 android:id="@+id/register_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:hint="@string/prompt_password"
                 android:imeActionId="@+id/signin"
                 android:imeActionLabel="@string/action_sign_in_short"
                 android:imeOptions="actionUnspecified"
                 android:inputType="textPassword"
                 android:maxLines="1"
+                android:padding="15dp"
                 android:singleLine="true" />
+
             <EditText
                 android:id="@+id/register_password_again"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:hint="@string/prompt_password_again"
                 android:imeActionId="@+id/signin"
                 android:imeActionLabel="@string/action_sign_in_short"
                 android:imeOptions="actionUnspecified"
                 android:inputType="textPassword"
                 android:maxLines="1"
+                android:padding="15dp"
                 android:singleLine="true" />
 
 
-            <Button
+            <TextView
                 android:id="@+id/email_register_button"
-                style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:padding="20dp"
+                android:gravity="center"
+                android:background="@color/deepRed"
                 android:text="@string/register"
-                android:textStyle="bold" />
+                android:textColor="@color/white"
+                />
 
         </LinearLayout>
     </ScrollView>

@@ -2,14 +2,13 @@ package com.leegacy.sooji.africaradio.Fragments;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +20,17 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.leegacy.sooji.africaradio.DataObjects.PlaylistItem;
 import com.leegacy.sooji.africaradio.DataObjects.User;
 import com.leegacy.sooji.africaradio.Listeners.OnPlayDetailListener;
 import com.leegacy.sooji.africaradio.Listeners.OnPlaylistListener;
+import com.leegacy.sooji.africaradio.Listeners.OnProfileFragmentListener;
+import com.leegacy.sooji.africaradio.Models.PlaylistRowModel;
 import com.leegacy.sooji.africaradio.Models.ProfileRowModel;
 import com.leegacy.sooji.africaradio.Models.RowModel;
 import com.leegacy.sooji.africaradio.MyAdapter;
@@ -32,7 +38,6 @@ import com.leegacy.sooji.africaradio.R;
 import com.leegacy.sooji.africaradio.RowModelFactory;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,20 +57,24 @@ public class ProfileFragment extends Fragment implements OnPlaylistListener, OnP
     private RecyclerView recyclerView;
     private MyAdapter myAdapter;
     private MediaPlayer myMediaPlayer;
-    private boolean first = true;
+
     private PlayDetailFragment pdf;
+    private OnProfileFragmentListener onProfileFragmentListener;
+    private String FOLLOWING_LIST = "following_list";
+    private File localFile;
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.profile_fragment, null);
+        root = inflater.inflate(R.layout.fragment_profile, null);
         ref = new Firebase("https://blazing-inferno-7470.firebaseio.com/android/saving-data/fireblog");
 //        nameTextView = (TextView) root.findViewById(R.id.userID);
 //        recordButton = (FloatingActionButton) root.findViewById(R.id.recordButton);
 //        recordButton.setOnClickListener(this);
         recyclerView = (RecyclerView) root.findViewById(R.id.profile_recycler_view);
         LinearLayoutManager lm = new LinearLayoutManager(getActivity());
+
         //lm.setReverseLayout(true);
         recyclerView.setLayoutManager(lm);
 
@@ -96,57 +105,67 @@ public class ProfileFragment extends Fragment implements OnPlaylistListener, OnP
             Toast.makeText(getActivity(), "User Not Logged In", Toast.LENGTH_LONG);
         }
     }
-    protected void decodeStringtoFile(String audioFile) {
-        byte[] decoded = Base64.decode(audioFile, Base64.DEFAULT);
-        File file = new File(Environment.getExternalStorageDirectory() + "/audio.3gp");
-        if (file.exists()) {
-            file.delete();
-            file = null;
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(myMediaPlayer!=null) {
+            myMediaPlayer.release();
+            myMediaPlayer = null;
         }
+    }
+
+    private void startPlayer() {
         try {
-            FileOutputStream os = new FileOutputStream(new File(Environment.getExternalStorageDirectory() + "/audio.3gp"), true);
-            os.write(decoded);
-            os.close();
-            return;
-        } catch (Exception e) {
+            myMediaPlayer.setDataSource(localFile.getAbsolutePath());
+            myMediaPlayer.prepare();
+//            seekBar.setMax(myMediaPlayer.getDuration());
+//            seekUpdation();
+            myMediaPlayer.start();
+
+        } catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(getActivity(), "file not decoded", Toast.LENGTH_SHORT);
-
+            Toast.makeText(getActivity(), "fetching audio data failed1", Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(getActivity(), "file not decoded", Toast.LENGTH_SHORT);
-
     }
 
     protected void setupAudio(String audioKey){
         //myMediaPlayer = MediaPlayer.create(this, outputFile);
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference audioStorageRef = storage.getReferenceFromUrl("gs://blazing-inferno-7470.appspot.com/audioFile");
 
         myMediaPlayer = new MediaPlayer();
-        ref.child("audioFile").child(audioKey).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                System.out.println("audioFile fetched" + dataSnapshot.getValue());
-                decodeStringtoFile(dataSnapshot.getValue(String.class));
-                try {
-                    myMediaPlayer.setDataSource(Environment.getExternalStorageDirectory() + "/audio.3gp");
-                    myMediaPlayer.prepare();
-                    myMediaPlayer.start();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getActivity(), "fetching audio data failed1", Toast.LENGTH_SHORT).show();
-                }
-            }
 
+
+        localFile = null;
+        try {
+            localFile = File.createTempFile("audio", "3gp");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        audioStorageRef.child(audioKey).getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                Toast.makeText(getActivity(), "fetching audio data failed", Toast.LENGTH_SHORT).show();
+            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                startPlayer();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                //TODO: handle errors
             }
         });
 
         myMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
+                onProfileFragmentListener.playFinished();
+                myMediaPlayer.release();
+                myMediaPlayer = null;
             }
         });
+
     }
 
 
@@ -155,6 +174,7 @@ public class ProfileFragment extends Fragment implements OnPlaylistListener, OnP
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
                 User user = dataSnapshot.getValue(User.class);
                 firstName = user.getFirstName();
                 lastName = user.getLastName();
@@ -242,6 +262,7 @@ public class ProfileFragment extends Fragment implements OnPlaylistListener, OnP
     @Override
     public void playRequested() {
         myMediaPlayer.start();
+        onProfileFragmentListener.playing();
     }
 
     @Override
@@ -254,14 +275,23 @@ public class ProfileFragment extends Fragment implements OnPlaylistListener, OnP
     }
 
     @Override
-    public void pauseRequested() {
-        myMediaPlayer.pause();
+    public void setProfileFragmentListener(OnProfileFragmentListener v) {
+        this.onProfileFragmentListener = v;
     }
 
     @Override
-    public void addPlayDetailFragment() {
+    public void pauseRequested() {
+        myMediaPlayer.pause();
+        onProfileFragmentListener.playFinished(); //updating pauseIcon to to playIcon
+    }
+
+
+
+    @Override
+    public void addPlayDetailFragment(PlaylistRowModel model) {
         pdf = new PlayDetailFragment();
         pdf.setOnPlayDetailListener(this);
+        pdf.setModel(model);
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .add(R.id.overlayFramelayout, pdf)
@@ -276,4 +306,5 @@ public class ProfileFragment extends Fragment implements OnPlaylistListener, OnP
                 .remove(pdf)
                 .commit();
     }
+
 }

@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
@@ -43,7 +42,7 @@ public class ExploreFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.explore_fragment, null);
+        root = inflater.inflate(R.layout.fragment_explore, null);
         ref = new Firebase("https://blazing-inferno-7470.firebaseio.com/android/saving-data/fireblog");
         explore_recycler = (RecyclerView) root.findViewById(R.id.explore_recycler);
         loadingText = (TextView) root.findViewById(R.id.loadingText);
@@ -68,7 +67,7 @@ public class ExploreFragment extends Fragment {
                     uid = authData.getUid();
                 } else {
                     // user is not logged in
-                    Toast.makeText(getActivity(), "User Not Logged In", Toast.LENGTH_LONG);
+
                 }
             }
         });
@@ -111,8 +110,10 @@ public class ExploreFragment extends Fragment {
                 for (DataSnapshot uidSnapshot : dataSnapshot.getChildren()) {
 
                     otherUid = uidSnapshot.getKey();
-
-                    getPlaylistHelper(otherUid);
+                    Log.e(TAG, "UID: "+uid+"OTHERUID: "+otherUid);
+                    if(!otherUid.equals(uid)) {
+                        getPlaylistHelper(otherUid);
+                    }
                 }
 
                 Log.e(TAG, "setRowmodels");

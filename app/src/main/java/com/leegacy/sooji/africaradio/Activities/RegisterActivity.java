@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
@@ -25,7 +25,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private EditText firstName;
     private EditText lastName;
-    private Button emailRegisterButton;
+    private TextView emailRegisterButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_register);
 
         emailRegister = (EditText) findViewById(R.id.email_register);
-        emailRegisterButton = (Button) findViewById(R.id.email_register_button);
+        emailRegisterButton = (TextView) findViewById(R.id.email_register_button);
         emailRegisterButton.setOnClickListener(this);
 
         passwordRegister = (EditText) findViewById(R.id.register_password);

@@ -1,51 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/recordBackground">
+
     <TextView
         android:id="@+id/userID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="Sooji" />
+        android:text="Sooji"
+        android:textSize="15sp" />
 
     <ImageView
         android:id="@+id/profilePicture"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/userID"
-        android:adjustViewBounds="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/person"
-        android:scaleType="fitXY" />
+        android:layout_marginTop="8dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/person" />
 
-    <TextView
-        android:id="@+id/bio"
-        android:layout_marginRight="50dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="20dp"
+
+    <RelativeLayout
+        android:id="@+id/followContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/profilePicture"
-        android:text="@string/bio"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="7dp">
+
+        <TextView
+            android:id="@+id/numFollowers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:text="0" />
+
+        <TextView
+            android:id="@+id/followersText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@id/numFollowers"
+            android:text="followers" />
+
+        <ImageView
+            android:id="@+id/pipeline"
+            android:layout_width="2px"
+            android:layout_height="15dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/followersText"
+            android:background="@color/grey" />
+
+        <TextView
+            android:id="@+id/numFollowing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toRightOf="@id/pipeline"
+            android:text="0" />
+
+        <TextView
+            android:id="@+id/followingText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/numFollowing"
+            android:text="following" />
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/bio"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/followContainer"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:textSize="10sp" />
+
     <RelativeLayout
+        android:id="@+id/followButtonContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/bio"
-        android:layout_centerHorizontal="true"
-        android:visibility="gone"
-        android:id="@+id/followButtonContainer">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true">
+
+        <FrameLayout
             android:id="@+id/followButton"
-            android:text="Follow" />
-        <Button
+            android:layout_width="85dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_corner"
+            android:layout_marginBottom="10dp"
+
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/followButtonText"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="follow"
+                android:textColor="@color/darkGrey" />
+
+        </FrameLayout>
+        <FrameLayout
+            android:id="@+id/messageButton"
+            android:layout_width="85dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/followButton"
+            android:background="@drawable/round_corner"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/messageButtonText"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Message"
+                android:textColor="@color/darkGrey" />
+
+        </FrameLayout>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/followButtonContainer"
+        android:layout_marginTop="15dp"
+        android:background="@color/lightGrey">
+
+        <ImageView
+            android:id="@+id/profileBarLine"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/grey" />
+
+        <TextView
+            android:id="@+id/profileChannelText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/messageButton"
-            android:layout_toRightOf="@id/followButton"
-            android:text="Message"/>
+            android:layout_below="@id/profileBarLine"
+            android:layout_margin="3dp"
+            android:text="Channel"
+            android:textSize="10sp" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_below="@id/profileChannelText"
+            android:background="@color/grey" />
     </RelativeLayout>
 </RelativeLayout>

@@ -9,12 +9,15 @@ public class PlaylistItem {
 //    private String audioFile;
     private int numHearts;
     private int numComments;
+    private String userID;
+
 
     public PlaylistItem(String title, String description, String audioFile) {
         this.title = title;
         this.description = description;
 //        this.audioFile = audioFile;
         this.numHearts = 0;
+
         this.numComments = 0;
     }
 
@@ -55,6 +58,14 @@ public class PlaylistItem {
 
     public void setNumComments(int numComments) {
         this.numComments = numComments;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
 

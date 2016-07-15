@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/lightGrey">
     <ScrollView
         android:id="@+id/signin_form"
         android:layout_width="match_parent"
@@ -9,19 +10,30 @@
 
         <LinearLayout
             android:id="@+id/email_signin_form"
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="0dp"
+                android:background="@color/white"
+                android:minHeight="0dp">
 
                 <EditText
                     android:id="@+id/email_signin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_email"
+                    android:gravity="center_vertical"
+                    android:minHeight="0dp"
+                    android:background="@color/white"
+                    android:padding="15dp"
+                    android:layout_margin="0dp"
+
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:singleLine="true" />
@@ -30,12 +42,18 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
+                android:background="@color/white"
+                android:padding="0dp"
                 android:layout_height="wrap_content">
 
                 <EditText
                     android:id="@+id/singin_password"
+                    android:layout_margin="0dp"
                     android:layout_width="match_parent"
+                    android:background="@color/white"
                     android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:gravity="center_vertical"
                     android:hint="@string/prompt_password"
                     android:imeActionId="@+id/signin"
                     android:imeActionLabel="@string/action_sign_in_short"
@@ -46,15 +64,28 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <Button
+
+
+            <TextView
                 android:id="@+id/email_sign_in_button"
-                style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/register"
-                android:textStyle="bold" />
+                android:padding="20dp"
+                android:text="Log In"
+                android:textColor="@color/white"
+                android:background="@color/deepRed"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Forgot password?"
+                android:layout_marginTop="12dp"
+                android:gravity="center"/>
+
 
         </LinearLayout>
+
     </ScrollView>
+
 </LinearLayout>
